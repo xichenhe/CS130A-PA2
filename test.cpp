@@ -14,6 +14,14 @@ int main(int argc, char const *argv[])
     
     std::cout << "highest: " << y.FindHighestDegree()<< std::endl;
     std::cout << "connectednum: " << y.FindConnectedNumber()<< std::endl;
+    std::cout << "parameter: "<< std::endl;
+    for(auto x: y.FindConnectedParameters()){
+        for(auto y:x){
+            std::cout << y << ", ";
+        }
+        std::cout << std::endl;
+    }
+    
     return 0;
     
 }

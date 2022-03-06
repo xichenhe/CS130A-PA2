@@ -25,6 +25,7 @@ void GraphGenerator::readEdges(std::string filename){
             temp.erase(temp.begin(),temp.begin()+1+temp.find(','));
             //std::cout << temp << std::endl;
             weight = std::stod(temp);
+            //std::cout << weight << std::endl;
             AddEdge(a,b,weight);
             /*
             std::cout << "a:" << a 
