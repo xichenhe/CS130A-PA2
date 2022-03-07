@@ -8,11 +8,13 @@ std::vector< std::vector<double> >* b ): adjacencyList(*a),hobbiesList(*b)
 {
     vertices = v;
     hobbies = h;
+    hobby--;
     calculateDegrees();
     calculateConnected();
     calculateEccentricities();
 }
 
+//O(V)
 void GraphOperator::calculateDegrees(){
     for(auto x: adjacencyList){
         degrees.push_back(x.size());
@@ -20,6 +22,7 @@ void GraphOperator::calculateDegrees(){
     }
 }
 
+//O(V^2+E)
 void GraphOperator::calculateEccentricities(){
     eccentricities.resize(vertices);
     for(auto s: connected){
@@ -77,7 +80,7 @@ void GraphOperator::calculateEccentricities(){
 
 }
 
-
+//O(V)
 double GraphOperator::FindAverageDegree(){
     int sum = 0;
     for(auto x: degrees){
@@ -91,6 +94,7 @@ double GraphOperator::FindAverageDegree(){
     return result;
 }
 
+//O(V)
 int GraphOperator::FindHighestDegree(){
     int maxVal = 0;
     int vertex = 0;
@@ -104,6 +108,7 @@ int GraphOperator::FindHighestDegree(){
     return vertex;
 }
 
+//O(V+E)
 void GraphOperator::calculateConnected(){
     std::stack<int> s;
     std::vector<bool> visited(vertices,false);
@@ -148,10 +153,12 @@ void GraphOperator::calculateConnected(){
     connectedNumber = connectednum;
 }
 
+
 int GraphOperator::FindConnectedNumber(){
     return connectedNumber;
 }
 
+//O(V)
 std::vector< std::vector<double> > GraphOperator::FindConnectedParameters(){
     std::vector<double> data;
     std::vector< std::vector<double> > output;
@@ -206,6 +213,7 @@ std::vector< std::vector<double> > GraphOperator::FindConnectedParameters(){
     return output;
 }
 
+//O(V+E)
 double GraphOperator::FindTrianglesRatio(){
     int closed = 0;
     int open = 0;
@@ -238,6 +246,7 @@ double GraphOperator::FindTrianglesRatio(){
 
 }
 
+//O(V)
 int GraphOperator::FindClosestNode(){
     int pos;
     for(int i = 0; i < connected.size();i++){
@@ -292,7 +301,7 @@ int GraphOperator::FindClosestNode(){
 
 }
 
-
+//O(V)
 int GraphOperator::FindHighestInterest(){
     double max = -1;
     int pos = - 1;
@@ -305,6 +314,7 @@ int GraphOperator::FindHighestInterest(){
     return pos+1;
 }
 
+//O(V^2)
 std::pair<int,int> GraphOperator::FindDistanceRatio(){
     double minRatio = INT_MAX;
     std::pair<int,int> anspair;
