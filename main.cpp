@@ -23,9 +23,10 @@ int main(int argc, char const *argv[])
     cout<<"The diameter, radius, and center(s) of each component:"<<endl;
     for(auto x:y.FindConnectedParameters())
     {
-        for(auto y:x)
+        cout << x[0];
+        for(int i = 1; i < x.size();i++)
         {
-            cout<<y<<", ";
+            cout<<", "<<x[i];
         }
         cout<<endl;
     }
