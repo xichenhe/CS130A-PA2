@@ -18,4 +18,4 @@ GraphOperator.o: GraphOperator.cpp GraphOperator.h
 	g++ -std=c++11 -c GraphOperator.cpp GraphOperator.h
 
 clean: 
-	rm -rf *.o PA2 test
+	rm -rf *.o *.h.gch PA2 test
