@@ -2,7 +2,7 @@
 test: GraphGenerator.o GraphOperator.o test.o
 	g++ -std=c++11 -o test test.o GraphGenerator.o GraphOperator.o
 
-main: GraphGenerator.o GraphOperator.o main.o
+PA2: GraphGenerator.o GraphOperator.o main.o
 	g++ -std=c++11 -o PA2 main.o GraphGenerator.o GraphOperator.o
 
 test.o: test.cpp
