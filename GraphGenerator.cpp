@@ -39,8 +39,8 @@ void GraphGenerator::readEdges(std::string filename){
 }
 
 void GraphGenerator::AddEdge(int a, int b, double weight){
-    adjacencyList[a].push_back(std::pair<int,double>(b,weight));
-    adjacencyList[b].push_back(std::pair<int,double>(a,weight));
+    adjacencyList[a-1].push_back(std::pair<int,double>(b-1,weight));
+    adjacencyList[b-1].push_back(std::pair<int,double>(a-1,weight));
 
 }
 

@@ -176,7 +176,7 @@ std::vector< std::vector<double> > GraphOperator::FindConnectedParameters(){
         data.push_back(eccentricities[min]);
         for(auto x: s){
             if(eccentricities[x]==eccentricities[min]){
-                data.push_back(x);
+                data.push_back(x+1);
                 
             }
         }
@@ -187,10 +187,12 @@ std::vector< std::vector<double> > GraphOperator::FindConnectedParameters(){
                 }
             }
         }
+        /*
         for(auto m : data){
            std::cout << m << ", ";
         }
         std::cout << std::endl;
+        */
         output.push_back(data);
         data.clear();
     }
@@ -262,7 +264,7 @@ int GraphOperator::FindClosestNode(){
                 //std::cout << min_pos << std::endl;
                 visited[min_pos] = true;
                 if(hobbiesList[min_pos][hobby]>=threshold){
-                    return min_pos;
+                    return min_pos+1;
                 }
                 for(auto x: adjacencyList[min_pos]){
                     if(distance[x.first]>x.second+distance[min_pos]){
@@ -300,7 +302,7 @@ int GraphOperator::FindHighestInterest(){
             pos = i;
         }
     }
-    return pos;
+    return pos+1;
 }
 
 std::pair<int,int> GraphOperator::FindDistanceRatio(){
@@ -358,7 +360,7 @@ std::pair<int,int> GraphOperator::FindDistanceRatio(){
                 double ans = hobbydist/edgedist;
                 if(ans < minRatio){
                     minRatio = ans;
-                    anspair={element,y};
+                    anspair={element+1,y+1};
                 }
             }
             

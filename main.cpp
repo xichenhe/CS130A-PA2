@@ -25,7 +25,7 @@ int main(int argc, char const *argv[])
     {
         for(auto y:x)
         {
-            cout<<y<<",";
+            cout<<y<<", ";
         }
         cout<<endl;
     }
