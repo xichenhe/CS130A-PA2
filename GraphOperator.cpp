@@ -1,7 +1,7 @@
 #include "GraphOperator.h"
 #include <stack>
 #include <iostream>
-
+#include <cmath>
 GraphOperator::GraphOperator(int v, int h, 
 std::vector< std::vector< std::pair<int,double> > >* a,
 std::vector< std::vector<double> >* b ): adjacencyList(*a),hobbiesList(*b)
@@ -30,7 +30,7 @@ void GraphOperator::calculateEccentricities(){
         }
         */
         for(auto element: s){
-            std::cout << "loop: " << element << std::endl;
+            //std::cout << "loop: " << element << std::endl;
             std::vector<double> distance(vertices,INT_MAX);
             std::vector<bool> visited(vertices, false);
             distance[element]=0;
@@ -44,12 +44,12 @@ void GraphOperator::calculateEccentricities(){
                         min_val = distance[e];
                     }
                 }
-                std::cout << min_pos << std::endl;
+                //std::cout << min_pos << std::endl;
                 visited[min_pos] = true;
                 for(auto x: adjacencyList[min_pos]){
                     if(distance[x.first]>x.second+distance[min_pos]){
                         distance[x.first]=x.second+distance[min_pos];
-                        std::cout << "x" << x.first << ", " << x.second << std::endl;
+                        //std::cout << "x" << x.first << ", " << x.second << std::endl;
                     }
 
                 }
@@ -71,7 +71,7 @@ void GraphOperator::calculateEccentricities(){
             }
             //std::cout << "here" << std::endl;
             eccentricities[element]=max_distance;
-            std::cout << "i: " << element << "\neccentricity: " << max_distance << std::endl;
+            //std::cout << "i: " << element << "\neccentricity: " << max_distance << std::endl;
         }
     }
 
@@ -159,9 +159,9 @@ std::vector< std::vector<double> > GraphOperator::FindConnectedParameters(){
         double min = *s.begin();
         double max = *s.begin();
         for(auto x : s){
-            std::cout << "x" << x << std::endl;
-            std::cout << "eccentricity" << eccentricities[x] << std::endl;
-            std::cout << "minval" << min << std::endl;
+            // std::cout << "x" << x << std::endl;
+            // std::cout << "eccentricity" << eccentricities[x] << std::endl;
+            // std::cout << "minval" << min << std::endl;
             if(eccentricities[x]>eccentricities[max]){
                 max = x;
             }
@@ -170,8 +170,8 @@ std::vector< std::vector<double> > GraphOperator::FindConnectedParameters(){
                 //std::cout << "entered" << min << std::endl;
             }
         }
-        std::cout << "max" << max << std::endl;
-        std::cout << "min" << min << std::endl;
+        // std::cout << "max" << max << std::endl;
+        // std::cout << "min" << min << std::endl;
         data.push_back(eccentricities[max]);
         data.push_back(eccentricities[min]);
         for(auto x: s){
@@ -202,4 +202,169 @@ std::vector< std::vector<double> > GraphOperator::FindConnectedParameters(){
         }
     }
     return output;
+}
+
+double GraphOperator::FindTrianglesRatio(){
+    int closed = 0;
+    int open = 0;
+    std::set<int> firstDepth;
+    for(auto x : adjacencyList){
+        for(auto y : x){
+            firstDepth.insert(y.first);
+        }
+        for(auto m: firstDepth){
+            for(auto n : adjacencyList[m]){
+                if(firstDepth.find(n.first)!=firstDepth.end()){
+                    closed++;
+                }
+            }
+        }
+        firstDepth.clear();
+    }
+    closed = closed/6;
+    //std::cout << closed << std::endl;
+    int total = 0;
+    for(auto x : adjacencyList){
+        int n = x.size();
+        total += n*(n-1)/2;
+
+    }
+    open = total-closed*3;
+    //std::cout << open << std::endl;
+
+    return static_cast<double>(open)/closed;
+
+}
+
+int GraphOperator::FindClosestNode(){
+    int pos;
+    for(int i = 0; i < connected.size();i++){
+        if(connected[i].find(startNode)!=connected[i].end()){
+            pos = i;
+            break;
+        }
+    }
+    for(auto element: connected[pos]){
+            //std::cout << "loop: " << element << std::endl;
+            std::vector<double> distance(vertices,INT_MAX);
+            std::vector<bool> visited(vertices, false);
+            distance[element]=0;
+            bool finished = false;
+            while(!finished){
+                double min_val = INT_MAX;
+                int min_pos = -1;
+                for(auto e: connected[pos]){
+                    if(visited[e]==false && distance[e]<=min_val){
+                        min_pos = e;
+                        min_val = distance[e];
+                    }
+                }
+                //std::cout << min_pos << std::endl;
+                visited[min_pos] = true;
+                if(hobbiesList[min_pos][hobby]>=threshold){
+                    return min_pos;
+                }
+                for(auto x: adjacencyList[min_pos]){
+                    if(distance[x.first]>x.second+distance[min_pos]){
+                        distance[x.first]=x.second+distance[min_pos];
+                        //std::cout << "x" << x.first << ", " << x.second << std::endl;
+                    }
+
+                }
+                finished = true;
+                for(auto e: connected[pos]){
+                    if(visited[e]==false){
+                        finished = false;
+                        continue;
+                    }
+                }
+                
+            }
+            
+
+            
+            
+            //std::cout << "i: " << element << "\neccentricity: " << max_distance << std::endl;
+    }
+    return -1;
+
+}
+
+
+int GraphOperator::FindHighestInterest(){
+    double max = -1;
+    int pos = - 1;
+    for(int i = 0; i < vertices; i++){
+        if(hobbiesList[i][hobby]>max){
+            max = hobbiesList[i][hobby];
+            pos = i;
+        }
+    }
+    return pos;
+}
+
+std::pair<int,int> GraphOperator::FindDistanceRatio(){
+    double minRatio = INT_MAX;
+    std::pair<int,int> anspair;
+    for(auto s: connected){
+        /*
+        std::vector<int> shouldVisit(vertices,false);
+        for(auto element: s){
+            shouldVisit[element] = true;
+        }
+        */
+        for(auto element: s){
+            //std::cout << "loop: " << element << std::endl;
+            std::vector<double> distance(vertices,INT_MAX);
+            std::vector<bool> visited(vertices, false);
+            distance[element]=0;
+            bool finished = false;
+            while(!finished){
+                double min_val = INT_MAX;
+                int min_pos = -1;
+                for(auto e: s){
+                    if(visited[e]==false && distance[e]<=min_val){
+                        min_pos = e;
+                        min_val = distance[e];
+                    }
+                }
+                //std::cout << min_pos << std::endl;
+                visited[min_pos] = true;
+                for(auto x: adjacencyList[min_pos]){
+                    if(distance[x.first]>x.second+distance[min_pos]){
+                        distance[x.first]=x.second+distance[min_pos];
+                        //std::cout << "x" << x.first << ", " << x.second << std::endl;
+                    }
+
+                }
+                finished = true;
+                for(auto e: s){
+                    if(visited[e]==false){
+                        finished = false;
+                        continue;
+                    }
+                }
+                
+            }
+            double sum = 0;
+            double hobbydist = 0;
+            
+            for(auto y : s){
+                double edgedist = distance[y];
+                for(int l = 0; l < hobbies; l++){
+                    sum += pow(hobbiesList[y][l]-hobbiesList[element][l],2);
+                }
+                hobbydist = sqrt(sum);
+                double ans = hobbydist/edgedist;
+                if(ans < minRatio){
+                    minRatio = ans;
+                    anspair={element,y};
+                }
+            }
+            
+        }
+        
+
+    }
+    return anspair;
 }

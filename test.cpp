@@ -15,12 +15,18 @@ int main(int argc, char const *argv[])
     std::cout << "highest: " << y.FindHighestDegree()<< std::endl;
     std::cout << "connectednum: " << y.FindConnectedNumber()<< std::endl;
     std::cout << "parameter: "<< std::endl;
+    
     for(auto x: y.FindConnectedParameters()){
         for(auto y:x){
             std::cout << y << ", ";
         }
         std::cout << std::endl;
     }
+    
+    std::cout << "triangleRatio: "<< y.FindTrianglesRatio() << std::endl;
+    std::cout << "ClosestNode: "<< y.FindClosestNode() << std::endl;
+    std::cout << "HighestInteres: "<< y.FindHighestInterest() << std::endl;
+    std::cout << "pair: "<< y.FindDistanceRatio().first << ", " << y.FindDistanceRatio().second << std::endl;
     
     return 0;
     

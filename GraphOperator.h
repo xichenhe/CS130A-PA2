@@ -10,6 +10,10 @@ class GraphOperator{
         int vertices;
         int hobbies;
         int connectedNumber;
+        int startNode = 0;
+        int hobby = 1;
+        double threshold = 0.7;
+
         const std::vector< std::vector< std::pair<int,double> > > adjacencyList;
         const std::vector< std::vector<double> > hobbiesList;
         std::vector<int> degrees;
@@ -25,7 +29,10 @@ class GraphOperator{
         int FindHighestDegree();
         int FindConnectedNumber();
         std::vector< std::vector<double> > FindConnectedParameters();
-
+        double FindTrianglesRatio();
+        int FindClosestNode();
+        int FindHighestInterest();
+        std::pair<int,int> FindDistanceRatio();
         /*
         FindAverageDegree
         FindHighestDegree
