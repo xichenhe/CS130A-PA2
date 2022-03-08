@@ -26,7 +26,7 @@ class GraphOperator{
         GraphOperator(int v, int h, std::vector< std::vector< std::pair<int,double> > >* a,std::vector< std::vector<double> >* b );
 
         double FindAverageDegree();
-        int FindHighestDegree();
+        std::vector<int> FindHighestDegree();
         int FindConnectedNumber();
         std::vector< std::vector<double> > FindConnectedParameters();
         double FindTrianglesRatio();

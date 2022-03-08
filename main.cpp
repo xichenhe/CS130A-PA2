@@ -18,7 +18,12 @@ int main(int argc, char const *argv[])
     cout<<y.FindAverageDegree()<<endl;
 
     cout<<"The vertex with the highest degree:"<<endl;
-    cout<<y.FindHighestDegree()<<endl;
+    cout << y.FindHighestDegree().at(0);
+    for(int i = 1; i < y.FindHighestDegree().size();i++){
+        cout<<", "<< y.FindHighestDegree().at(i);
+    }
+    cout << endl;
+    
 
     cout<<"The number of connected components:"<<endl;
     cout<<y.FindConnectedNumber()<<endl;

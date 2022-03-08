@@ -1,23 +1,25 @@
+CXX=g++
 
-all: test PA2
+CXXFLAGS = -std=c++17 -Wall -g
+
+all: PA2
 
 test: GraphGenerator.o GraphOperator.o test.o
-	g++ -std=c++11 -o test test.o GraphGenerator.o GraphOperator.o
+	${CXX} ${CXXFLAGS} -o $@ $^
 
-PA2: GraphGenerator.o GraphOperator.o main.o
-	g++ -std=c++11 -o PA2 main.o GraphGenerator.o GraphOperator.o
+PA2: GraphGenerator.o GraphOperator.o PA2.o
+	${CXX} ${CXXFLAGS} -o $@ $^
 
 test.o: test.cpp
-	g++ -std=c++11 -c test.cpp
+	${CXX} ${CXXFLAGS} -c -o $@ $^
 
-main.o: main.cpp
-	g++ -std=c++11 -c main.cpp
+PA2.o: main.cpp
+	${CXX} ${CXXFLAGS} -c -o $@ $^
 
 GraphGenerator.o: GraphGenerator.cpp GraphGenerator.h
-	g++ -std=c++11 -c GraphGenerator.cpp GraphGenerator.h
+	${CXX} ${CXXFLAGS} -c -o $@ $^
 
 GraphOperator.o: GraphOperator.cpp GraphOperator.h
-	g++ -std=c++11 -c GraphOperator.cpp GraphOperator.h
-
+	${CXX} ${CXXFLAGS} -c -o $@ $^
 clean: 
 	rm -rf *.o *.h.gch PA2 test

@@ -95,17 +95,30 @@ double GraphOperator::FindAverageDegree(){
 }
 
 //O(V)
-int GraphOperator::FindHighestDegree(){
+std::vector<int> GraphOperator::FindHighestDegree(){
+    std::vector<int> vertices;
     int maxVal = 0;
     int vertex = 0;
     for(int i = 0; i < degrees.size(); i++){
         if(degrees.at(i) > maxVal){
             maxVal = degrees.at(i);
             vertex = i;
+            vertices.clear();
+            vertices.push_back(i);
+        }
+        else if(degrees.at(i)==maxVal){
+            vertices.push_back(i);
         }
         
     }
-    return vertex;
+    for(int i = vertices.size()-1;i>0;i++){
+        for(int j = 0; j<i;j++){
+            if(vertices[j]>vertices[j+1]){
+                std::swap(vertices[j],vertices[j+1]);
+            }
+        }
+    }
+    return vertices;
 }
 
 //O(V+E)
@@ -248,12 +261,15 @@ double GraphOperator::FindTrianglesRatio(){
 
 //O(V)
 int GraphOperator::FindClosestNode(){
-    int pos;
+    int pos = -1;
     for(int i = 0; i < connected.size();i++){
         if(connected[i].find(startNode)!=connected[i].end()){
             pos = i;
             break;
         }
+    }
+    if(pos==-1){
+        return -1;
     }
     for(auto element: connected[pos]){
             //std::cout << "loop: " << element << std::endl;
