@@ -1,4 +1,6 @@
 
+all: test PA2
+
 test: GraphGenerator.o GraphOperator.o test.o
 	g++ -std=c++11 -o test test.o GraphGenerator.o GraphOperator.o
 

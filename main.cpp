@@ -1,17 +1,20 @@
 #include "GraphGenerator.h"
 #include "GraphOperator.h"
 #include <iostream>
+#include <iomanip>
 using namespace std;
 
 int main(int argc, char const *argv[])
 {
     GraphGenerator x;
-    x.readEdges("edges.txt");
-    x.readHobbies("hobbies.txt");
+    x.readEdges(argv[1]);
+    x.readHobbies(argv[2]);
 
     GraphOperator y(x.getVertices(),x.getHobbies(),x.getAdjacencyList(),x.getHobbiesList());
 
     cout<<"The average degree:"<<endl;
+    std::cout << std::fixed << std::showpoint;
+    std::cout << std::setprecision(2);
     cout<<y.FindAverageDegree()<<endl;
 
     cout<<"The vertex with the highest degree:"<<endl;
@@ -20,17 +23,28 @@ int main(int argc, char const *argv[])
     cout<<"The number of connected components:"<<endl;
     cout<<y.FindConnectedNumber()<<endl;
 
+    std::cout << std::setprecision(1);
     cout<<"The diameter, radius, and center(s) of each component:"<<endl;
     for(auto x:y.FindConnectedParameters())
     {
+        std::cout << std::setprecision(1);
         cout << x[0];
         for(int i = 1; i < x.size();i++)
         {
-            cout<<", "<<x[i];
+            if(i==1){
+                std::cout << std::setprecision(1);
+                cout<<", "<<x[i];
+            }
+            else{
+                
+                cout<<", "<<static_cast<int>(x[i]);
+            }
+            
         }
         cout<<endl;
     }
 
+    std::cout << std::setprecision(4);
     cout<<"The ratio between the number of open and closed triangles:"<<endl;
     cout<<y.FindTrianglesRatio()<<endl;
 
