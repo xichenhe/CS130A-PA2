@@ -378,5 +378,8 @@ std::pair<int,int> GraphOperator::FindDistanceRatio(){
         
 
     }
+    if(anspair.first>anspair.second){
+        std::swap(anspair.first,anspair.second);
+    }
     return anspair;
 }
