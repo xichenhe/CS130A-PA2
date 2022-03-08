@@ -19,7 +19,7 @@ int main(int argc, char const *argv[])
 
     cout<<"The vertex with the highest degree:"<<endl;
     cout << y.FindHighestDegree().at(0);
-    for(int i = 1; i < y.FindHighestDegree().size();i++){
+    for(size_t i = 1; i < y.FindHighestDegree().size();i++){
         cout<<", "<< y.FindHighestDegree().at(i);
     }
     cout << endl;
@@ -34,7 +34,7 @@ int main(int argc, char const *argv[])
     {
         //std::cout << std::setprecision(1);
         cout << x[0];
-        for(int i = 1; i < x.size();i++)
+        for(size_t i = 1; i < x.size();i++)
         {
         /*
             if(i==1){
