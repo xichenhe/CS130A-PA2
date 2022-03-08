@@ -91,6 +91,8 @@ double GraphOperator::FindAverageDegree(){
     //std::cout << degrees.size() << std::endl;
     double result = static_cast<double>(sum)/degrees.size();
     //std::cout << result << std::endl;
+    int temp = result * 100;
+    result = static_cast<double>(temp)/100;
     return result;
 }
 
@@ -192,8 +194,12 @@ std::vector< std::vector<double> > GraphOperator::FindConnectedParameters(){
         }
         // std::cout << "max" << max << std::endl;
         // std::cout << "min" << min << std::endl;
-        data.push_back(eccentricities[max]);
-        data.push_back(eccentricities[min]);
+        int temp = eccentricities[max] * 10; 
+        double maxval = static_cast<double>(temp) /10; 
+        temp = eccentricities[min] * 10;
+        double minval = static_cast<double>(temp) /10; 
+        data.push_back(maxval);
+        data.push_back(minval);
         for(auto x: s){
             if(eccentricities[x]==eccentricities[min]){
                 data.push_back(x+1);
@@ -254,8 +260,10 @@ double GraphOperator::FindTrianglesRatio(){
     }
     open = total-closed*3;
     //std::cout << open << std::endl;
+    int temp = static_cast<double>(open)/closed * 10000;
+    double result = static_cast<double>(temp) / 10000;
 
-    return static_cast<double>(open)/closed;
+    return result;
 
 }
 
