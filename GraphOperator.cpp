@@ -3,6 +3,7 @@
 #include <iostream>
 #include <cmath>
 #include <climits>
+
 GraphOperator::GraphOperator(int v, int h, 
 std::vector< std::vector< std::pair<int,double> > >* a,
 std::vector< std::vector<double> >* b ): adjacencyList(*a),hobbiesList(*b)
@@ -301,6 +302,8 @@ double GraphOperator::FindTrianglesRatio(){
 
 //O(V)
 int GraphOperator::FindClosestNode(){
+    double min_dis= INT_MAX;
+    std::vector<int> possibleAnswers;
     int pos = -1;
     for(size_t i = 0; i < connected.size();i++){
         if(connected[i].find(startNode)!=connected[i].end()){
@@ -331,9 +334,18 @@ int GraphOperator::FindClosestNode(){
                 //std::cout << min_pos << std::endl;
                 visited[min_pos] = true;
                 //std::cout << "min: " <<min_pos << ", "<< distance[min_pos] << std::endl;
-                if(min_pos!=startNode && hobbiesList[min_pos][hobby]>=threshold){
+                if(hobbiesList[min_pos][hobby]>=threshold){
+                    if(distance[min_pos]<=min_dis){
+                        min_dis = distance[min_pos];
+                        //std::cout << "min: " <<min_pos << ", "<< distance[min_pos] << std::endl;
+                    }
+                    else{
+                        break;
+                    }
+                    possibleAnswers.push_back(min_pos+1);
+                    
                     //std::cout << "hobby: " << hobbiesList[min_pos][hobby] << std::endl;
-                    return min_pos+1;
+                    //return min_pos+1;
                 }
                 for(auto x: adjacencyList[min_pos]){
                     if(distance[x.first]>x.second+distance[min_pos]){
@@ -358,9 +370,16 @@ int GraphOperator::FindClosestNode(){
             
             //std::cout << "i: " << element << "\neccentricity: " << max_distance << std::endl;
     //}
+    for(int i = possibleAnswers.size()-1; i > 0; i--){
+        for(int j = 0; j < i; j++){
+            if(possibleAnswers[j]>possibleAnswers[j+1]){
+                std::swap(possibleAnswers[j],possibleAnswers[j+1]);
+            }
+        }
+    }
 
-
-    return -1;
+    //std::sort(possibleAnswers.begin(),possibleAnswers.end(),[](int a, int b){return a<b;});
+    return possibleAnswers[0];
 
 }
 
