@@ -228,7 +228,7 @@ std::vector< std::vector<double> > GraphOperator::FindConnectedParameters(){
         data.push_back(maxval);
         data.push_back(minval);
         for(auto x: s){
-            if(eccentricities[x]==eccentricities[min]){
+            if(std::abs(eccentricities[x]-eccentricities[min])<0.001){
                 data.push_back(x+1);
                 
             }
