@@ -12,8 +12,8 @@ using std::chrono::duration;
 int main(int argc, char const *argv[])
 {
     GraphGenerator x;
-    x.readEdges("edges.txt");
-    x.readHobbies("hobbies.txt");
+    x.readEdges("edges1.txt");
+    x.readHobbies("hobbies1.txt");
     
     GraphOperator y(x.getVertices(),x.getHobbies(),x.getAdjacencyList(),x.getHobbiesList());
     
@@ -25,12 +25,8 @@ int main(int argc, char const *argv[])
 
 
     t1=high_resolution_clock::now();
-    std::cout<<"The vertex with the highest degree:"<<std::endl;
-    std::cout << y.FindHighestDegree().at(0);
-    for(int i = 1; i < y.FindHighestDegree().size();i++){
-        std::cout<<", "<< y.FindHighestDegree().at(i);
-    }
-    std::cout << std::endl;
+
+    std::cout << "highest: " << y.FindHighestDegree().at(0)<< std::endl;
     t2=high_resolution_clock::now();
     ms_double = t2 - t1; 
     std::cout<<"highest time: "<<ms_double.count()<<std::endl;

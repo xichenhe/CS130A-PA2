@@ -10,7 +10,7 @@ class GraphOperator{
         int vertices;
         int hobbies;
         int connectedNumber;
-        int startNode = 39;
+        int startNode = 1;
         int hobby = 7;
         double threshold = 0.5;
 

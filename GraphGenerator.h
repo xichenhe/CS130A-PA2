@@ -6,7 +6,7 @@
 #include <string>
 class GraphGenerator{
     private:
-        int vertices = 100;
+        int vertices = 10;
         int hobbies = 20;
         std::vector< std::vector< std::pair<int,double> > > adjacencyList;
         std::vector< std::vector<double> > hobbiesList;
