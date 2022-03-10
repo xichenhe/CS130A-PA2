@@ -12,8 +12,8 @@ using std::chrono::duration;
 int main(int argc, char const *argv[])
 {
     GraphGenerator x;
-    x.readEdges("edges.txt");
-    x.readHobbies("hobbies.txt");
+    x.readEdges("edges1.txt");
+    x.readHobbies("hobbies1.txt");
     
     GraphOperator y(x.getVertices(),x.getHobbies(),x.getAdjacencyList(),x.getHobbiesList());
     

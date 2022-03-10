@@ -10,8 +10,8 @@ class GraphOperator{
         int vertices;
         int hobbies;
         int connectedNumber;
-        int startNode = 39;
-        int hobby = 7;
+        int startNode =10;
+        int hobby = 1;
         double threshold = 0.5;
 
         const std::vector< std::vector< std::pair<int,double> > > adjacencyList;
