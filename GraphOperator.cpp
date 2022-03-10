@@ -2,6 +2,8 @@
 #include <stack>
 #include <iostream>
 #include <cmath>
+#include <climits>
+
 GraphOperator::GraphOperator(int v, int h, 
 std::vector< std::vector< std::pair<int,double> > >* a,
 std::vector< std::vector<double> >* b ): adjacencyList(*a),hobbiesList(*b)
@@ -9,6 +11,7 @@ std::vector< std::vector<double> >* b ): adjacencyList(*a),hobbiesList(*b)
     vertices = v;
     hobbies = h;
     hobby--;
+    startNode--;
     calculateDegrees();
     calculateConnected();
     calculateEccentricities();
@@ -91,21 +94,47 @@ double GraphOperator::FindAverageDegree(){
     //std::cout << degrees.size() << std::endl;
     double result = static_cast<double>(sum)/degrees.size();
     //std::cout << result << std::endl;
+    int temp = result * 1000;
+    if(temp%10>=5){
+        temp = (temp+10)/10;
+    } 
+    else{
+        temp = temp/10;
+    }
+    result = static_cast<double>(temp)/100;
     return result;
 }
 
 //O(V)
-int GraphOperator::FindHighestDegree(){
+std::vector<int> GraphOperator::FindHighestDegree(){
+    //std::cout << "here" << std::endl;
+    std::vector<int> vertices;
     int maxVal = 0;
     int vertex = 0;
-    for(int i = 0; i < degrees.size(); i++){
+    for(size_t i = 0; i < degrees.size(); i++){
+        //std::cout << "loop0" << std::endl;
         if(degrees.at(i) > maxVal){
             maxVal = degrees.at(i);
             vertex = i;
+            vertices.clear();
+            vertices.push_back(i+1);
+        }
+        else if(degrees.at(i)==maxVal){
+            vertices.push_back(i+1);
         }
         
     }
-    return vertex;
+    for(int i = vertices.size()-1;i>0;i--){
+        //std::cout << "loop1" << std::endl;
+        for(int j = 0; j < i; j++){
+            //std::cout << "loop2" << std::endl;
+            if(vertices[j]>vertices[j+1]){
+                //std::cout << "if" << std::endl;
+                std::swap(vertices[j],vertices[j+1]);
+            }
+        }
+    }
+    return vertices;
 }
 
 //O(V+E)
@@ -179,8 +208,25 @@ std::vector< std::vector<double> > GraphOperator::FindConnectedParameters(){
         }
         // std::cout << "max" << max << std::endl;
         // std::cout << "min" << min << std::endl;
-        data.push_back(eccentricities[max]);
-        data.push_back(eccentricities[min]);
+        int temp = eccentricities[max] * 100;
+        if(temp%10>=5){
+            temp = (temp+10)/10;
+        } 
+        else{
+        temp = temp/10;
+        }
+        
+        double maxval = static_cast<double>(temp) /10; 
+        temp = eccentricities[min] * 100;
+        if(temp%10>=5){
+            temp = (temp+10)/10;
+        }
+        else{
+        temp = temp/10;
+        }
+        double minval = static_cast<double>(temp) /10; 
+        data.push_back(maxval);
+        data.push_back(minval);
         for(auto x: s){
             if(eccentricities[x]==eccentricities[min]){
                 data.push_back(x+1);
@@ -241,25 +287,40 @@ double GraphOperator::FindTrianglesRatio(){
     }
     open = total-closed*3;
     //std::cout << open << std::endl;
+    int temp = static_cast<double>(open)/closed * 100000;
+    if(temp%10>=5){
+        temp = (temp+10)/10;
+    }
+    else{
+        temp = temp/10;
+    }
+    double result = static_cast<double>(temp) / 10000;
 
-    return static_cast<double>(open)/closed;
+    return result;
 
 }
 
 //O(V)
 int GraphOperator::FindClosestNode(){
-    int pos;
-    for(int i = 0; i < connected.size();i++){
+    double min_dis= INT_MAX;
+    std::vector<int> possibleAnswers;
+    int pos = -1;
+    for(size_t i = 0; i < connected.size();i++){
         if(connected[i].find(startNode)!=connected[i].end()){
             pos = i;
             break;
         }
     }
-    for(auto element: connected[pos]){
+    //std::cout << "pos: " << pos << std::endl;
+    if(pos==-1){
+        return -1;
+    }
+
+    //for(auto element: connected[pos]){
             //std::cout << "loop: " << element << std::endl;
             std::vector<double> distance(vertices,INT_MAX);
             std::vector<bool> visited(vertices, false);
-            distance[element]=0;
+            distance[startNode]=0;
             bool finished = false;
             while(!finished){
                 double min_val = INT_MAX;
@@ -272,8 +333,19 @@ int GraphOperator::FindClosestNode(){
                 }
                 //std::cout << min_pos << std::endl;
                 visited[min_pos] = true;
+                //std::cout << "min: " <<min_pos << ", "<< distance[min_pos] << std::endl;
                 if(hobbiesList[min_pos][hobby]>=threshold){
-                    return min_pos+1;
+                    if(distance[min_pos]<=min_dis){
+                        min_dis = distance[min_pos];
+                        //std::cout << "min: " <<min_pos << ", "<< distance[min_pos] << std::endl;
+                    }
+                    else{
+                        break;
+                    }
+                    possibleAnswers.push_back(min_pos+1);
+                    
+                    //std::cout << "hobby: " << hobbiesList[min_pos][hobby] << std::endl;
+                    //return min_pos+1;
                 }
                 for(auto x: adjacencyList[min_pos]){
                     if(distance[x.first]>x.second+distance[min_pos]){
@@ -291,13 +363,23 @@ int GraphOperator::FindClosestNode(){
                 }
                 
             }
+
             
 
             
             
             //std::cout << "i: " << element << "\neccentricity: " << max_distance << std::endl;
+    //}
+    for(int i = possibleAnswers.size()-1; i > 0; i--){
+        for(int j = 0; j < i; j++){
+            if(possibleAnswers[j]>possibleAnswers[j+1]){
+                std::swap(possibleAnswers[j],possibleAnswers[j+1]);
+            }
+        }
     }
-    return -1;
+
+    //std::sort(possibleAnswers.begin(),possibleAnswers.end(),[](int a, int b){return a<b;});
+    return possibleAnswers[0];
 
 }
 
@@ -377,6 +459,9 @@ std::pair<int,int> GraphOperator::FindDistanceRatio(){
         }
         
 
+    }
+    if(anspair.first>anspair.second){
+        std::swap(anspair.first,anspair.second);
     }
     return anspair;
 }
