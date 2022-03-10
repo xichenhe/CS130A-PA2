@@ -44,9 +44,9 @@ int main(int argc, char const *argv[])
 
     for(auto x: y.FindConnectedParameters()){
         for(auto y:x){
-            // std::cout << y << ", ";
+            std::cout << y << ", ";
         }
-        // std::cout << std::endl;
+        std::cout << std::endl;
     }
     t2=high_resolution_clock::now();
     ms_double = t2 - t1; 
