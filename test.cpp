@@ -57,13 +57,16 @@ int main(int argc, char const *argv[])
     GraphOperator y(x.getVertices(),x.getHobbies(),x.getAdjacencyList(),x.getHobbiesList());
 
 
+    std::ofstream record;
+    record.open("record.txt"); 
+
 
     auto t1 = high_resolution_clock::now();
     std::cout << "avg: " << y.FindAverageDegree() << std::endl;
     auto t2 = high_resolution_clock::now();
     duration<double, std::milli> ms_double = t2 - t1;
     std::cout<<"avg time: "<<ms_double.count()<<std::endl;
-
+    record<<ms_double.count()<<" ";
 
     t1=high_resolution_clock::now();
 
@@ -71,12 +74,14 @@ int main(int argc, char const *argv[])
     t2=high_resolution_clock::now();
     ms_double = t2 - t1; 
     std::cout<<"highest time: "<<ms_double.count()<<std::endl;
+    record<<ms_double.count()<<" ";
 
     t1=high_resolution_clock::now(); 
     std::cout << "connectednum: " << y.FindConnectedNumber()<< std::endl;
     t2=high_resolution_clock::now();
     ms_double = t2 - t1; 
     std::cout<<"connectednum time: "<<ms_double.count()<<std::endl;
+    record<<ms_double.count()<<" ";
 
 
     t1=high_resolution_clock::now(); 
@@ -92,30 +97,39 @@ int main(int argc, char const *argv[])
     t2=high_resolution_clock::now();
     ms_double = t2 - t1; 
     std::cout<<"parameter time: "<<ms_double.count()<<std::endl; 
+    std::cout<<ms_double.count()<<std::endl;
+    record<<ms_double.count()<<" ";
 
     t1=high_resolution_clock::now(); 
     std::cout << "triangleRatio: "<< y.FindTrianglesRatio() << std::endl;
     t2=high_resolution_clock::now();
     ms_double = t2 - t1; 
     std::cout<<"ratio time: "<<ms_double.count()<<std::endl; 
+    record<<ms_double.count()<<" ";
 
     t1=high_resolution_clock::now(); 
     std::cout << "ClosestNode: "<< y.FindClosestNode() << std::endl;
     t2=high_resolution_clock::now(); 
     ms_double = t2 - t1; 
     std::cout<<"closestNode time: "<<ms_double.count()<<std::endl; 
+    record<<ms_double.count()<<" ";
 
     t1=high_resolution_clock::now();  
     std::cout << "HighestInteres: "<< y.FindHighestInterest() << std::endl;
     t2=high_resolution_clock::now(); 
     ms_double = t2 - t1; 
     std::cout<<"HighestInteres time: "<<ms_double.count()<<std::endl; 
+    record<<ms_double.count()<<" ";
 
     t1=high_resolution_clock::now();  
     std::cout << "pair: "<< y.FindDistanceRatio().first << ", " << y.FindDistanceRatio().second << std::endl;
     t2=high_resolution_clock::now();  
     ms_double = t2 - t1; 
-    std::cout<<"pair time: "<<ms_double.count()<<std::endl;  
+    std::cout<<"pair time: "<<ms_double.count()<<std::endl; 
+    record<<ms_double.count()<<"\n"; 
+    record.close();
+
+
 
     return 0;
     
