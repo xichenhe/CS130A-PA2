@@ -2,7 +2,7 @@ CXX=g++
 
 CXXFLAGS = -std=c++17 -Wall -g
 
-all: PA2
+all: PA2 test
 
 test: GraphGenerator.o GraphOperator.o test.o
 	${CXX} ${CXXFLAGS} -o $@ $^
