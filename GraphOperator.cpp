@@ -3,6 +3,11 @@
 #include <iostream>
 #include <cmath>
 #include <climits>
+#include <chrono>
+using std::chrono::high_resolution_clock;
+using std::chrono::milliseconds;
+using std::chrono::duration_cast;
+using std::chrono::duration;
 
 GraphOperator::GraphOperator(int v, int h, 
 std::vector< std::vector< std::pair<int,double> > >* a,
@@ -12,9 +17,19 @@ std::vector< std::vector<double> >* b ): adjacencyList(*a),hobbiesList(*b)
     hobbies = h;
     hobby--;
     startNode--;
+    auto t1 = high_resolution_clock::now();
     calculateDegrees();
+    auto t2 = high_resolution_clock::now();
     calculateConnected();
+    auto t3 = high_resolution_clock::now();
     calculateEccentricities();
+    auto t4 = high_resolution_clock::now();
+    duration<double, std::milli> ms_double1 = t2 - t1;
+    duration<double, std::milli> ms_double2 = t3 - t2;
+    duration<double, std::milli> ms_double3 = t4 - t3;
+    std::cout<<"calculate degree time: "<<ms_double1.count()<<std::endl;
+    std::cout << "calculate connected time: "<<ms_double2.count()<<std::endl;
+    std::cout << "calculate eccentricity time: "<<ms_double3.count()<<std::endl;
 }
 
 //O(V)
