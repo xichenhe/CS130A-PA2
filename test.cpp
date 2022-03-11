@@ -11,10 +11,11 @@ using std::chrono::duration;
 
 
 int main(int argc, char const *argv[])
-{
-    int vertices;
-    std::cout<<"type in the number of vertices:";
-    std::cin>>vertices;
+{   
+    GraphGenerator x;
+    int vertices = x.getVertices();
+    //std::cout<<"type in the number of vertices:";
+    //std::cin>>vertices;
     std::ofstream edges;
     edges.open ("edges1.txt");
     for(int i=0;i<vertices-1;i++)
@@ -51,7 +52,7 @@ int main(int argc, char const *argv[])
 
 
     // Here is the original part
-    GraphGenerator x;
+    
     x.readEdges("edges1.txt");
     x.readHobbies("hobbies1.txt");
     GraphOperator y(x.getVertices(),x.getHobbies(),x.getAdjacencyList(),x.getHobbiesList());
