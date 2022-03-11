@@ -59,24 +59,41 @@ int main(int argc, char const *argv[])
 
 
     std::ofstream record;
-    record.open("record.txt"); 
+    record.open("record750.txt"); 
 
-
+    // calculate degree
     auto t1 = high_resolution_clock::now();
-    std::cout << "avg: " << y.FindAverageDegree() << std::endl;
+    y.calculateDegrees();
     auto t2 = high_resolution_clock::now();
     duration<double, std::milli> ms_double = t2 - t1;
+    std::cout<<"calculate Degree:"<<ms_double.count()<<std::endl;
+    record<<ms_double.count()<<" ";
+
+// calculate Eccentricities
+    t1 = high_resolution_clock::now();
+    y.calculateEccentricities();
+    t2 = high_resolution_clock::now();
+    ms_double = t2 - t1;
+    std::cout<<"calculate Eccentricities:"<<ms_double.count()<<std::endl;
+    record<<ms_double.count()<<" ";  
+
+// Find average degree
+    t1 = high_resolution_clock::now();
+    std::cout << "avg: " << y.FindAverageDegree() << std::endl;
+    t2 = high_resolution_clock::now();
+    ms_double = t2 - t1;
     std::cout<<"avg time: "<<ms_double.count()<<std::endl;
     record<<ms_double.count()<<" ";
 
+// find highest degree
     t1=high_resolution_clock::now();
-
     std::cout << "highest: " << y.FindHighestDegree().at(0)<< std::endl;
     t2=high_resolution_clock::now();
     ms_double = t2 - t1; 
     std::cout<<"highest time: "<<ms_double.count()<<std::endl;
     record<<ms_double.count()<<" ";
 
+// find connected number
     t1=high_resolution_clock::now(); 
     std::cout << "connectednum: " << y.FindConnectedNumber()<< std::endl;
     t2=high_resolution_clock::now();
@@ -84,11 +101,18 @@ int main(int argc, char const *argv[])
     std::cout<<"connectednum time: "<<ms_double.count()<<std::endl;
     record<<ms_double.count()<<" ";
 
+// calculate connected
+    t1 = high_resolution_clock::now();
+    y.calculateConnected();
+    t2 = high_resolution_clock::now();
+    ms_double = t2 - t1;
+    std::cout<<"calculate Connected:"<<ms_double.count()<<std::endl;
+    record<<ms_double.count()<<" ";  
 
+
+// find connected parameters
     t1=high_resolution_clock::now(); 
     std::cout << "parameter: "<< std::endl; 
-
-
     for(auto x: y.FindConnectedParameters()){
         for(auto y:x){
             std::cout << y << ", ";
@@ -101,6 +125,7 @@ int main(int argc, char const *argv[])
     std::cout<<ms_double.count()<<std::endl;
     record<<ms_double.count()<<" ";
 
+// find triangle ratio 
     t1=high_resolution_clock::now(); 
     std::cout << "triangleRatio: "<< y.FindTrianglesRatio() << std::endl;
     t2=high_resolution_clock::now();
@@ -108,6 +133,7 @@ int main(int argc, char const *argv[])
     std::cout<<"ratio time: "<<ms_double.count()<<std::endl; 
     record<<ms_double.count()<<" ";
 
+// find closest node
     t1=high_resolution_clock::now(); 
     std::cout << "ClosestNode: "<< y.FindClosestNode() << std::endl;
     t2=high_resolution_clock::now(); 
@@ -115,6 +141,7 @@ int main(int argc, char const *argv[])
     std::cout<<"closestNode time: "<<ms_double.count()<<std::endl; 
     record<<ms_double.count()<<" ";
 
+// find highest interest
     t1=high_resolution_clock::now();  
     std::cout << "HighestInteres: "<< y.FindHighestInterest() << std::endl;
     t2=high_resolution_clock::now(); 
@@ -122,12 +149,15 @@ int main(int argc, char const *argv[])
     std::cout<<"HighestInteres time: "<<ms_double.count()<<std::endl; 
     record<<ms_double.count()<<" ";
 
+// find distance ratio
     t1=high_resolution_clock::now();  
     std::cout << "pair: "<< y.FindDistanceRatio().first << ", " << y.FindDistanceRatio().second << std::endl;
     t2=high_resolution_clock::now();  
     ms_double = t2 - t1; 
     std::cout<<"pair time: "<<ms_double.count()<<std::endl; 
     record<<ms_double.count()<<"\n"; 
+
+
     record.close();
 
 

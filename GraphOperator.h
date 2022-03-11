@@ -19,10 +19,11 @@ class GraphOperator{
         std::vector<int> degrees;
         std::vector< std::set<int> > connected;
         std::vector<double> eccentricities;
+    public:
         void calculateDegrees();
         void calculateEccentricities();
         void calculateConnected();
-    public:
+    
         GraphOperator(int v, int h, std::vector< std::vector< std::pair<int,double> > >* a,std::vector< std::vector<double> >* b );
 
         double FindAverageDegree();
